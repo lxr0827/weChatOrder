@@ -11,12 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from weChatOrder.WeInterc.parser import parse_user_msg
 
-
-TOKEN = "lixirui5817802"
-
-#乐棒棒
-# appid = "wx35668aa2f078cc29"
-# secret = "5fe65fb6585f91b3ac4bfe390f51dc25"
+TOKEN = "lxr0827"
 
 #test
 appid = "wx243dd553e7ab9da7"
