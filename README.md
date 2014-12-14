@@ -27,3 +27,4 @@ checkSignature | 配置校验签名
 accesstoken定时获取 | access_token
 接收解析微信平台post的消息 | 包括文本、图像、时间等
 处理关注者信息  | 包括订阅、取消订阅事件的处理
+创建修改自定义菜单 | 支持click、view类型的主子菜单形式
