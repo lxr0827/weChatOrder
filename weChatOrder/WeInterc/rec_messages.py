@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 __author__ = 'lxr0827'
+
 class WeChatMessage(object):
     def __init__(self, **kwargs):
         if 'msgid' in kwargs:

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-from weChatOrder.WeInterc.user_info import UserInfo
+import json
+import requests
+from weChatOrder.WeInterc import get_access_token
 from weChatOrder.WeInterc.user_info_admin import getUserInfo, unsubscribeUser
 
 __author__ = 'lxr0827'
@@ -12,10 +14,6 @@ from django.views.decorators.csrf import csrf_exempt
 from weChatOrder.WeInterc.parser import parse_user_msg
 
 TOKEN = "lxr0827"
-
-#test
-appid = "wx243dd553e7ab9da7"
-secret = "57f109fd1cce0913a76a1700f94c4e2d"
 
 message_types = ['subscribe', 'unsubscribe', 'click',   'event',
                      'text', 'image', 'link', 'location', 'voice']
@@ -34,9 +32,7 @@ def handleRequest(request):
 
 def responseMsg(request):
     body = smart_str(request.body)
-    # print body
     message = parse_user_msg(body)
-    # print message.type
     if message.type == 'click':
         print(message.key)
         return
@@ -73,3 +69,25 @@ def procSubEvent(message):
 
 def procUnsubEvent(message):
     unsubscribeUser(message.source)
+
+def postToWeiChat(pstUrl, message):
+    postCount = 1
+    r = requests.post(url=pstUrl, data=message)
+    while r.status_code != requests.codes.ok and postCount < 4: # @UndefinedVariable
+        # postToWeichatLogger.error(u'post到微信失败,postUrl='+pstUrl+u' message='+message+u' 发送次数:'+str(postCount))
+        r = requests.post(url=pstUrl, data=message)
+        postCount+=1
+    if r.status_code == requests.codes.ok:  # @UndefinedVariable
+        errorCode = json.loads(r.text)[u'errcode']
+        if (errorCode == 0):
+            # postToWeichatLogger.info(u'post到微信成功,postUrl='+pstUrl+u'message='+message+u' 发送次数:'+str(postCount))
+            return True
+        else:
+            # postToWeichatLogger.error(u'post到微信失败,postUrl='+pstUrl+u' message='+message+u' 发送次数:'+str(postCount)+u' errorCode:'+str(errorCode))
+            return False
+    if postCount >= 4 :
+        # postToWeichatLogger.error(u'post到微信失败,postUrl='+pstUrl+u'message='+message+u' 重复次数过多，发送次数:'+str(postCount))
+        return False
+
+    # postToWeichatLogger.error(u'post到微信失败,postUrl='+pstUrl+u'message='+message+u' 发送次数:'+str(postCount))
+    return False

@@ -10,7 +10,7 @@ class AccessToken(models.Model):
         return self.accessToken
 
     class Meta:
-        verbose_name_plural = u'ACCESSTOKEN'
+        verbose_name_plural = 'ACCESSTOKEN'
 
 class AccessTokenAdmin(admin.ModelAdmin):
     readonly_fields=('accessToken',)

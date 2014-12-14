@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 __author__ = 'lxr0827'
 from django.db import models
-#from unilever_weichat.settings import WeiInterc_appLabel
 
 class UserInfo(models.Model):
     openid = models.CharField(primary_key=True,max_length = 128,editable=False)
@@ -19,4 +18,4 @@ class UserInfo(models.Model):
         return self.nickname
 
     class Meta:
-        verbose_name_plural = u'关注者信息'
+        verbose_name_plural = '关注者信息'

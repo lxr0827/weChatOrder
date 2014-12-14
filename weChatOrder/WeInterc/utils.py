@@ -126,8 +126,7 @@ def json_loads(s):
     s = to_unicode(s)
     return json.loads(s)
 
-#��ȡ��������ĸ
-def multi_get_letter(str_input): 
+def multi_get_letter(str_input):
     if isinstance(str_input, unicode): 
         unicode_str = str_input 
     else: 

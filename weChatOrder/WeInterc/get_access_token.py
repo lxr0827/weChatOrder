@@ -5,10 +5,10 @@ import datetime
 #定时运行该脚本获取accesstoken，记录到accesstoken module里
 
 #test
-appid = "wx243dd553e7ab9da7"
-secret = "57f109fd1cce0913a76a1700f94c4e2d"
+APPID = "wx243dd553e7ab9da7"
+SECRET = "57f109fd1cce0913a76a1700f94c4e2d"
 
-AccessTokenURL = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + appid + '&secret=' + secret
+AccessTokenURL = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + APPID + '&secret=' + SECRET
 
 r = requests.get(AccessTokenURL)
 if (r.status_code == requests.codes.ok):  # @UndefinedVariable
