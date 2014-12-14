@@ -22,7 +22,7 @@ SECRET_KEY = 'e&)p8uwd_jv)@b87ahs__p)a%+lnpo_*^)r@_c*pp=f!$1=d!o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = []
 
@@ -30,13 +30,33 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    'djangocms_admin_style',  # for the admin skin. You **must** add 'djangocms_admin_style' in the list **before** 'django.contrib.admin'.
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
     'weChatOrder.WeInterc',
+
+    # django-cms
+    'djangocms_text_ckeditor',  # note this needs to be above the 'cms' entry
+    'cms',  # django CMS itself
+    'mptt',  # utilities for implementing a tree
+    'menus',  # helper for model independent hierarchical website navigation
+    'sekizai',  # for javascript and css management
+
+    # django-cms plugin
+    'djangocms_file',
+    #'djangocms_flash',
+    'djangocms_inherit',
+    'djangocms_picture',
+    #'djangocms_teaser',
+    'djangocms_video',
+    'djangocms_link',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -47,6 +67,35 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
+    'cms.middleware.language.LanguageCookieMiddleware',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.request',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'sekizai.context_processors.sekizai',
+    'cms.context_processors.cms_settings',
+)
+
+TEMPLATE_DIRS = (
+    # The docs say it should be absolute path: BASE_DIR is precisely one.
+    # Life is wonderful!
+    os.path.join(BASE_DIR, "templates"),
+)
+
+LANGUAGES = [
+    ('zh-cn', u'简体中文'),
+]
+
+CMS_TEMPLATES = (
+    ('template_1.html', 'Template One'),
 )
 
 ROOT_URLCONF = 'weChatOrder.urls'
@@ -71,6 +120,7 @@ DATABASES = {
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
+SITE_ID = 1
 
 LANGUAGE_CODE = 'zh-cn'
 
@@ -86,4 +136,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_URL = "/static/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
