@@ -1,0 +1,12 @@
+
+django==1.7.1
+PyMysql==0.6.3
+requests==2.5.0
+django-cms==3.0.7
+djangocms_text_ckeditor
+djangocms_file
+djangocms_flash
+djangocms_inherit
+djangocms_picture
+djangocms_video
+djangocms_link
